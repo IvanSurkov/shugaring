@@ -5,11 +5,11 @@ if (faqTabs.length > 0) {
 		item.addEventListener('click', function (e) {
 			e.preventDefault();
 			const id = e.target.getAttribute('href').replace('#', '');
-			
+
 			faqTabs.forEach((child) => {
 				child.classList.remove('faq-tabs__item--active')
 			});
-			
+
 			document.querySelectorAll('.faq-content__item').forEach((child) => {
 				child.classList.remove('faq-content__item--active')
 			});
@@ -22,8 +22,8 @@ if (faqTabs.length > 0) {
 
 document.querySelector('.faq-tabs__item').click();
 
-function faqtList(ittem) {
-	console.log(ittem);
+function faqList(ittem) {
+	//console.log(ittem);
 
 	document.querySelectorAll('.faq-content__item').forEach((child) => {
 		child.classList.remove('faq-content__item--active')

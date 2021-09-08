@@ -286,35 +286,46 @@ if (iconMenu) {
 //	работа калькулятора на основной странице и в поп-апе
 const calcCheckboxs = document.querySelectorAll('.checkbox');
 let priceList = new Map();
-
+let calcTotal = 0;
+let faceAreaTxt = "1 зона";
 if (calcCheckboxs.length > 0) {
-	let calcTotal = 0;
 
 	calcCheckboxs.forEach(calcCheckbox => {
-		calcCheckbox.addEventListener('change', (event) => {
+		calcCheckbox.addEventListener('change', ({target: {checked, id, value}}) => {
 			const priceAmounts = document.querySelectorAll('.price__amount');
-			if (event.target.checked) {
-				calcTotal += parseInt(event.target.value, 10);
-
-				//	формируем элемент DIV для вставки в поп-ап
-				/*console.log("--- элемент DIV для вставки ---");
-				let divElem = document.createElement('div');
-				divElem.className = "price-item";
-				divElem.innerHTML = document.getElementById(event.target.id).nextElementSibling.innerHTML +
-					` <span>` + event.target.value + `</span>`;
-				console.log(divElem);
-				console.log("----------------");*/
-
-				//	формируем MAP для вставки в поп-ап
-				let priceItem = `<div class="price-item"> ` +
-					document.getElementById(event.target.id).nextElementSibling.innerHTML +
-					` <span>` + event.target.value + `</span>
+			if (checked) {
+				let priceItem = ``;
+				let chkIdNextElem = document.getElementById(id).nextElementSibling;
+				if (id === 'service_10') {
+					document.querySelector('.services__face-area').disabled = true;
+					//	формируем MAP для вставки в поп-ап
+					priceItem = `<div class="price-item"> ${chkIdNextElem.firstChild.textContent}
+ 								(${faceAreaTxt}) <span>${value}</span>
 							</div>`;
-				priceList.set(event.target.id, priceItem);
+				} else {
+					//	формируем MAP для вставки в поп-ап
+					priceItem = `<div class="price-item"> ${chkIdNextElem.innerHTML}
+ 								<span>${value}</span>
+							</div>`;
+				}
+
+				if (id === 'service_21' || id === 'service_22') {
+					//	формируем MAP для вставки в поп-ап
+					priceItem = `<div class="price-item"> ${chkIdNextElem.lastChild.textContent}
+ 								<span>${value}</span>
+							</div>`;
+				}
+
+				priceList.set(id, priceItem);
+				calcTotal += parseInt(value, 10);
 			} else {
-				calcTotal -= parseInt(event.target.value, 10);
+				if (id === 'service_10') {
+					document.querySelector('.services__face-area').disabled = false;
+				}
+
+				calcTotal -= parseInt(value, 10);
 				//	удаляем элемент из МАР, когда снимаем галку с этого элемента
-				priceList.delete(event.target.id);
+				priceList.delete(id);
 			}
 
 			if (priceAmounts.length > 0) {
@@ -331,6 +342,22 @@ if (calcCheckboxs.length > 0) {
 			}
 		});
 	});
+}
+
+//	выпадающий список с зонами лица (изменение цены)
+function servicesList(elem) {
+	let faceAreaList = new Map();
+	const faceChk = document.getElementById("service_10");
+
+	faceAreaList.set("area_01", 150)
+		.set("area_02", 200)
+		.set("area_03", 300)
+		.set("area_04", 400)
+		.set("area_05", 500);
+
+	document.getElementById("face-area").innerHTML = faceAreaList.get(elem.value);
+	faceChk.setAttribute('value', faceAreaList.get(elem.value));
+	faceAreaTxt = elem.options[elem.selectedIndex].text;
 }
 
 /*const priceBtn = document.querySelector('.price__btn');
