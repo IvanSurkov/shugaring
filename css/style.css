@@ -360,7 +360,7 @@
 }
 
 .promo {
-  background: linear-gradient(90deg, rgba(190, 169, 157, 0) 0, rgba(190, 169, 157, 0) calc((100% - 1375px)/2), #f5d4c1 calc((100% - 1365px)/2 + .1px), #f5d4c1);
+  background: linear-gradient(90deg, rgba(190, 169, 157, 0) 0, rgba(190, 169, 157, 0) calc((100% - 1375px) / 2), #f5d4c1 calc((100% - 1365px) / 2 + .1px), #f5d4c1);
   grid-row: 1 / 2;
   display: grid;
   grid-template: 1fr 1fr/1fr minmax(auto, 1031px) minmax(auto, 344px) 1fr;
@@ -403,9 +403,9 @@
   margin: 35px 0px 32px 25px;
   display: grid;
   /* grid-template:
-			"promo-1"
-			"promo-2"
-		; */
+        "promo-1"
+        "promo-2"
+    ; */
   grid-template-rows: repeat(auto-fit, minmax(100px, 1fr));
   gap: 35px 0px;
 }
@@ -474,8 +474,12 @@
   cursor: pointer;
 }
 
+.button.disable {
+  display: none;
+}
+
 .calculator {
-  background: linear-gradient(90deg, #f8d6b8 0, #f8d6b8 calc((100% - 1375px)/2), #f7f3f1 calc((100% - 1365px)/2 + .1px), #f7f3f1);
+  background: linear-gradient(90deg, #f8d6b8 0, #f8d6b8 calc((100% - 1375px) / 2), #f7f3f1 calc((100% - 1365px) / 2 + .1px), #f7f3f1);
   grid-row: 2/3;
   margin-top: 120px;
 }
@@ -531,9 +535,16 @@
   top: 2px;
 }
 
-.calculator__complex .services-row:nth-child(odd) {
+.calculator__complex .services-row:nth-child(n) {
   border-right: none;
   padding-right: 0px;
+}
+
+.calculator__note {
+  display: none;
+  grid-area: calc_note;
+  padding: 0px 50px;
+  margin-top: 25px;
 }
 
 .calculator__price {
@@ -616,6 +627,10 @@
   padding-left: 10px;
 }
 
+.services__face-area {
+  border: 1px solid #aea5a9;
+}
+
 .advantages {
   grid-row: 3/4;
   display: grid;
@@ -623,29 +638,29 @@
   /*grid-template: minmax(auto, 93px) 1fr minmax(auto, 205px) / 1fr minmax(auto, 40px) minmax(auto, 940px) minmax(auto, 395px) 1fr; */
   z-index: 2;
   /* background: url("/../img/bg/bg1.png") bottom no-repeat;
-	background-size: cover; */
+  background-size: cover; */
   /* &__empty {
-		grid-column: 1 / 4;
-		grid-row: 2/4;
-		//background: url("/../img/bg/bg1.png") bottom left/contain no-repeat;
-		background: url("/../img/img1.jpg") bottom left/contain no-repeat;
-	} */
+      grid-column: 1 / 4;
+      grid-row: 2/4;
+      //background: url("/../img/bg/bg1.png") bottom left/contain no-repeat;
+      background: url("/../img/img1.jpg") bottom left/contain no-repeat;
+  } */
 }
 
 .advantages__container {
   background-color: #f8d6b8;
   grid-column: 1 / 3;
-  width: calc((100vw - 1375px)/2 + 950px);
-  padding: 35px 40px 0px calc((100vw - 1375px)/2 + 40px);
+  width: calc((100vw - 1375px) / 2 + 950px);
+  padding: 35px 40px 0px calc((100vw - 1375px) / 2 + 40px);
   display: grid;
   /* grid-template: minmax(auto, 93px) 1fr minmax(auto, 205px) / 1fr minmax(auto, 40px) minmax(auto, 900px); */
-  /* 	grid-template: 
-			//"... 	adv_title"		minmax(auto, 93px)
-			"... 	adv_title"
-			"... 	adv_content"	1fr
-			"... 	adv_btn"		auto
-			/ minmax(50px, auto)	minmax(auto, 895px)
-		; */
+  /* 	grid-template:
+            //"... 	adv_title"		minmax(auto, 93px)
+            "... 	adv_title"
+            "... 	adv_content"	1fr
+            "... 	adv_btn"		auto
+            / minmax(50px, auto)	minmax(auto, 895px)
+        ; */
   grid-template: "adv_title" "adv_content" 1fr "adv_btn" auto;
 }
 
@@ -710,7 +725,7 @@
 
 .achievements {
   grid-row: 4/5;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0) calc((100% - 1375px)/2), #e1d7d0 calc((100% - 1375px)/2 + .1px), #e1d7d0);
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, 0) calc((100% - 1375px) / 2), #e1d7d0 calc((100% - 1375px) / 2 + .1px), #e1d7d0);
   margin-top: 55px;
   padding: 0px 0px 20px 0px;
   display: grid;
@@ -780,8 +795,8 @@
   grid-area: review_btn;
   width: 225px;
   /* 	@media (max-width: $md4+px) {
-			margin-left: 0;
-		} */
+            margin-left: 0;
+        } */
 }
 
 .review__container {
@@ -3341,8 +3356,8 @@ strong {
   .promo__promotion {
     grid-area: promotion;
     /* grid-template:
-				"promo-1 promo-2"
-			; */
+          "promo-1 promo-2"
+      ; */
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 0px 20px;
     margin: 0px 0px 20px 0px;
