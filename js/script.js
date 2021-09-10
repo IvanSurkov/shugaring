@@ -288,8 +288,16 @@ const calcCheckboxs = document.querySelectorAll('.checkbox');
 let priceList = new Map();
 let calcTotal = 0;
 let faceAreaTxt = "1 зона";
-if (calcCheckboxs.length > 0) {
+let groupChk = new Map();
+groupChk.set("service_13", ["service_6", "service_7"])
+	.set("service_1", ["service_15"])
+	.set("service_5", ["service_4", "service_14"])
+	.set("service_complex_1", ["service_complex_2", "service_1",
+		"service_15", "service_2", "service_6", "service_13", "service_7"])
+	.set("service_complex_2", ["service_complex_1", "service_1",
+		"service_15", "service_2", "service_6", "service_13", "service_7"]);
 
+if (calcCheckboxs.length > 0) {
 	calcCheckboxs.forEach(calcCheckbox => {
 		calcCheckbox.addEventListener('change', ({target: {checked, id, value}}) => {
 			const priceAmounts = document.querySelectorAll('.price__amount');
@@ -309,8 +317,8 @@ if (calcCheckboxs.length > 0) {
 							</div>`;
 				}
 
-				if (id === 'service_21' || id === 'service_22') {
-					//	формируем MAP для вставки в поп-ап
+				//	формируем MAP для вставки в поп-ап
+				if (id === 'service_complex_1' || id === 'service_complex_2') {
 					priceItem = `<div class="price-item"> ${chkIdNextElem.lastChild.textContent}
  								<span>${value}</span>
 							</div>`;
@@ -318,6 +326,26 @@ if (calcCheckboxs.length > 0) {
 
 				priceList.set(id, priceItem);
 				calcTotal += parseInt(value, 10);
+
+				//	взаимоисключение чек боксов
+				groupChk.forEach((value1, key) => {
+					if (id === key) {
+						value1.forEach((item) => {
+							let chkOff = document.getElementById(item);
+							chkOff.disabled = true;
+							chkOff.closest('.services-row').style.opacity = "0.6";
+							chkOff.nextElementSibling.style.cursor = "default";
+
+							if (chkOff.checked) {
+								chkOff.checked = false;
+								priceList.delete(item);
+								calcTotal -= parseInt(chkOff.value, 10);
+							}
+
+						});
+					}
+				});
+
 			} else {
 				if (id === 'service_10') {
 					document.querySelector('.services__face-area').disabled = false;
@@ -326,6 +354,18 @@ if (calcCheckboxs.length > 0) {
 				calcTotal -= parseInt(value, 10);
 				//	удаляем элемент из МАР, когда снимаем галку с этого элемента
 				priceList.delete(id);
+
+				//	взаимоисключение чекбоксов
+				groupChk.forEach((value, key) => {
+					if (id === key) {
+						value.forEach((item) => {
+							let chkOn = document.getElementById(item);
+							chkOn.disabled = false;
+							chkOn.closest('.services-row').removeAttribute('style');
+							chkOn.nextElementSibling.removeAttribute('style');
+						});
+					}
+				});
 			}
 
 			if (priceAmounts.length > 0) {
